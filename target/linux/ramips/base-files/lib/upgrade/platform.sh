@@ -124,9 +124,7 @@ platform_check_image() {
 	x5 |\
 	x8 |\
 	xiaomi-miwifi-mini |\
-	hc5661 |\
-	hc5761 |\
-	hc5861 |\
+	hc5*61 |\
 	y1 |\
 	y1s |\
 	zbt-wa05 |\

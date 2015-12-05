@@ -253,6 +253,15 @@ get_status_led() {
 	zte-q7)
 		status_led="zte:red:status"
 		;;
+	hc5661)
+		status_led="hc5661:blue:system"
+		;;
+	hc5761)
+		status_led="hc5761:blue:system"
+		;;
+	hc5861)
+		status_led="hc5861:blue:system"
+		;;
 	esac
 }
 
