@@ -146,6 +146,9 @@ ramips_setup_interfaces()
 	wt1520 | \
 	xiaomi-miwifi-mini |\
 	y1|\
+	hc5661 |\
+	hc5761 |\
+	hc5861 |\
 	zbt-wg2626)
 		ucidef_set_interfaces_lan_wan "eth0.1" "eth0.2"
 		ucidef_add_switch "switch0" "1" "1"

@@ -433,6 +433,15 @@ ramips_board_detect() {
 			name="linkits7688"
 		fi
 		;;
+	*"HIWIF HC5661")
+		name="hc5661"
+		;;
+	*"HIWIF HC5761")
+		name="hc5761"
+		;;
+	*"HIWIF HC5861")
+		name="hc5861"
+		;;
 	*)
 		name="generic"
 		;;
