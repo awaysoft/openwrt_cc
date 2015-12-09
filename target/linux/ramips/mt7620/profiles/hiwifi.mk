@@ -10,7 +10,7 @@ define Profile/HC5661
 	PACKAGES:=\
 		kmod-usb-core kmod-usb-dwc2 kmod-usb2 \
 		kmod-mmc-spi kmod-sdhci kmod-sdhci-mt7620 \
-   		kmod-ledtrig-usbdev
+   		kmod-ledtrig-usbdev kmod-mt7620
 endef
 
 define Profile/HC5661/Description
@@ -24,7 +24,7 @@ define Profile/HC5761
 	PACKAGES:=\
 		kmod-usb-core kmod-usb-dwc2 kmod-usb2 \
 		kmod-mmc-spi kmod-sdhci kmod-sdhci-mt7620 \
-		kmod-ledtrig-usbdev
+		kmod-ledtrig-usbdev kmod-mt7620 kmod-mt7610e
 endef
 
 define Profile/HC5761/Description
@@ -38,7 +38,7 @@ define Profile/HC5861
 	PACKAGES:=\
 		kmod-usb-core kmod-usb-dwc2 kmod-usb2 \
 		kmod-mmc-spi kmod-sdhci kmod-sdhci-mt7620 \
-		kmod-ledtrig-usbdev
+		kmod-ledtrig-usbdev kmod-mt7620 kmod-mt7610e
 endef
 
 define Profile/HC5861/Description
