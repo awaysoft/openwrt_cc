@@ -1,0 +1,95 @@
+#!/bin/sh /etc/rc.common
+# Copyright (C) 2006 OpenWrt.org
+START=65
+
+USE_PROCD=1
+
+EXTRA_COMMANDS="status"
+EXTRA_HELP="        status Print the status of the service"
+
+service_trigger() {
+	 procd_add_reload_trigger	"wifidog"	
+}
+
+prepare_wifidog_conf() {
+	config_load wifidog
+	
+	local gateway_id
+	local gateway_interface
+	local external_interface
+	local auth_server_hostname
+	local auth_server_http_port
+	local auth_server_path
+	local check_interval
+	local client_timeout
+	local httpd_max_conn
+
+	local default_gateway_id=`ifconfig eth0|grep HWaddr|awk '{print $5}'|sed s/://g`
+	
+	config_get gateway_id "wifidog" "gateway_id" $default_gateway_id
+	config_get external_interface "wifidog" "external_interface" "eth0.2"
+	config_get gateway_interface "wifidog" "gateway_interface" "br-lan"
+	config_get auth_server_hostname "wifidog" "auth_server_hostname" "gw.apfree.net"
+	config_get auth_server_http_port "wifidog" "auth_server_http_port" "80"
+	config_get auth_server_path "wifidog" 	"auth_server_path" "/wifidog/"	
+	config_get check_interval	"wifidog"	"check_interval"	"60"
+	config_get client_timeout	"wifidog"	"client_timeout"	"5"
+	config_get httpd_max_conn	"wifidog"	"httpd_max_conn"	"100"
+		
+	cat > /tmp/wifidog.conf <<EOF
+GatewayID $gateway_id
+GatewayInterface $gateway_interface
+Externalinterface $external_interface
+
+AuthServer {
+    Hostname $auth_server_hostname
+    HTTPPort $auth_server_http_port
+    Path $auth_server_path
+}
+
+CheckInterval $check_interval
+ClientTimeout $client_timeout
+
+HTTPDMaxConn $httpd_max_conn
+
+FirewallRuleSet validating-users {
+    FirewallRule allow to 0.0.0.0/0
+}
+
+FirewallRuleSet known-users {
+    FirewallRule allow to 0.0.0.0/0
+}
+
+FirewallRuleSet unknown-users {
+    FirewallRule allow udp port 53
+    FirewallRule allow tcp port 53
+    FirewallRule allow udp port 67
+    FirewallRule allow tcp port 67
+}
+
+FirewallRuleSet locked-users {
+    FirewallRule block to 0.0.0.0/0
+}
+EOF
+}
+
+start_service() {
+    prepare_wifidog_conf
+	
+	[ ! -f /tmp/wifidog.conf ] || {
+		echo "no wifidog.conf, exit....."
+		exit
+	}
+	
+	procd_open_instance
+    # -s: log to syslog
+    # -f: run in foreground
+    procd_set_param command /usr/bin/wifidog -s -f -c /tmp/wifidog.conf
+    procd_set_param respawn # respawn automatically if something died
+    procd_set_param file /tmp/wifidog.conf
+    procd_close_instance
+}
+
+status() {
+    /usr/bin/wdctl status
+}
