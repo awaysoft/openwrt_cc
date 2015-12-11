@@ -52,6 +52,10 @@ define Package/apfree_wifidog/install
 	$(INSTALL_DATA) $(PKG_BUILD_DIR)/wifidog-msg.html $(1)/etc/
 	$(INSTALL_DIR) $(1)/etc/init.d
 	$(INSTALL_BIN) ./files/wifidog.init $(1)/etc/init.d/wifidog
+	$(INSTALL_DIR) $(1)/etc/config
+	$(CP) ./files/wifidog.conf $(1)/etc/config/
+	$(INSTALL_DIR) $(1)/etc/uci-defaults
+	$(INSTALL_BIN) ./files/08_add-wifidog-conf-gatewayid $(1)/etc/uci-defaults/
 endef
 
 $(eval $(call BuildPackage,apfree_wifidog))
