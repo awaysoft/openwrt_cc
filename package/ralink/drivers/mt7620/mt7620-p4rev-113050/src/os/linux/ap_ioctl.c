@@ -407,8 +407,6 @@ INT rt28xx_ap_ioctl(
 			Status = RTMP_IO_EOPNOTSUPP;
 			break;
 		case SIOCSIWSCAN:
-			// liudf 20150327
-			printk("SIOCSIWSCAN ==== \n");
 			//Status = RTMP_IO_EOPNOTSUPP;
 			//ApSiteSurvey(pAd, NULL, SCAN_WSC_ACTIVE, FALSE);
 			Status = RTMP_IO_EOPNOTSUPP;
@@ -446,9 +444,6 @@ INT rt28xx_ap_ioctl(
 				prange->max_qual.level = 0; /* dB */
 				prange->max_qual.noise = 0; /* dB */
 				len = copy_to_user(wrq->u.data.pointer, prange, sizeof(struct iw_range));
-				// liudf 20150327; debug
-				printk("come here len is %d=====\n", len);
-
 				os_free_mem(NULL, prange);
 		    }
 		    break;

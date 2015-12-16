@@ -3,6 +3,8 @@
 START=65
 
 USE_PROCD=1
+PROG=/usr/bin/wifidog
+CONFIGFILE=/tmp/wifidog.conf
 
 EXTRA_COMMANDS="status"
 EXTRA_HELP="        status Print the status of the service"
@@ -76,7 +78,7 @@ EOF
 start_service() {
     prepare_wifidog_conf
 	
-	[ ! -f /tmp/wifidog.conf ] || {
+	[ ! -f /tmp/wifidog.conf ] && {
 		echo "no wifidog.conf, exit....."
 		exit
 	}
@@ -84,9 +86,9 @@ start_service() {
 	procd_open_instance
     # -s: log to syslog
     # -f: run in foreground
-    procd_set_param command /usr/bin/wifidog -s -f -c /tmp/wifidog.conf
+    procd_set_param command $PROG -s -f -c $CONFIGFILE
     procd_set_param respawn # respawn automatically if something died
-    procd_set_param file /tmp/wifidog.conf
+    procd_set_param file $CONFIGFILE
     procd_close_instance
 }
 

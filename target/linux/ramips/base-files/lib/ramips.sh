@@ -433,13 +433,13 @@ ramips_board_detect() {
 			name="linkits7688"
 		fi
 		;;
-	*"HIWIFI HC5661")
+	*"HiWiFi HC5661")
 		name="hc5661"
 		;;
-	*"HIWIFI HC5761")
+	*"HiWiFi HC5761")
 		name="hc5761"
 		;;
-	*"HIWIFI HC5861")
+	*"HiWiFi HC5861")
 		name="hc5861"
 		;;
 	*)
