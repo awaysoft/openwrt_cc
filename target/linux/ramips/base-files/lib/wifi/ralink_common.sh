@@ -227,8 +227,8 @@ enable_ralink_wifi() {
     for vif in $vifs; do
         config_get ifname $vif ifname
         config_get disabled $vif disabled
-	config_get radio $device radio
-	config_get apcli_enable $vif apcli_enable
+		config_get radio $device radio
+		config_get apcli_enable $vif apcli_enable
         ifconfig $ifname down
 		
         echo "ifconfig $ifname down" >>/dev/null
@@ -239,18 +239,18 @@ enable_ralink_wifi() {
             echo "ifconfig $ifname up" >>/dev/null
             ifconfig $ifname up
         fi
-	# liudf added 20150325
-	[ "$apcli_enable" = "1" -a "$ifname" = "ra0" ] && {
-		config_get apcli_ssid $vif apcli_ssid
-		[ ! -z "$apcli_ssid" ] && {
-			echo "ifconfig apcli0 up" >> /tmp/wifi.log
-			ifconfig apcli0 up
-		} || {
-			echo "need apcli_ssid parameter"
-			ifconfig apcli0 down
+		# liudf added 20150325
+		[ "$apcli_enable" = "1" -a "$ifname" = "ra0" ] && {
+			config_get apcli_ssid $vif apcli_ssid
+			[ ! -z "$apcli_ssid" ] && {
+				echo "ifconfig apcli0 up" >> /tmp/wifi.log
+				ifconfig apcli0 up
+			} || {
+				echo "need apcli_ssid parameter"
+				ifconfig apcli0 down
+			}
 		}
-	}
-	#Radio On/Off only support iwpriv command but dat file
+		#Radio On/Off only support iwpriv command but dat file
         [ "$radio" == "0" ] && iwpriv $ifname set RadioOn=0
         local net_cfg bridge
         net_cfg="$(find_net_config "$vif")"
@@ -260,7 +260,7 @@ enable_ralink_wifi() {
             start_net "$ifname" "$net_cfg"
         }
 
-	chk8021x $device
+		chk8021x $device
         set_wifi_up "$vif" "$ifname"
     done
 }
